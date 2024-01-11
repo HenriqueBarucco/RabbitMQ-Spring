@@ -6,10 +6,14 @@ import org.springframework.stereotype.Component;
 
 @Log4j2
 @Component
-public class StringConsumer {
+public class ProductConsumer {
 
     @RabbitListener(queues = { "product.log" })
-    public void consumer(String message) {
-        log.info("Consumer received a message: {}", message);
+    public void consumer(String dto) {
+        try {
+            log.info("Consumer received a message: {}", dto);
+        } catch (Exception e) {
+            log.error("Error processing message", e);
+        }
     }
 }
